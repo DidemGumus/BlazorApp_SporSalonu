@@ -1,0 +1,161 @@
+@using MyBlazorApp.Models
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="@Member" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary class="alert alert-danger mb-4" />
+
+    <div class="mb-4">
+        <label class="form-label-custom">
+            <i class="bi bi-person-fill me-2 text-primary"></i>Ad Soyad <span class="text-danger">*</span>
+        </label>
+        <InputText @bind-Value="Member.FullName"
+                   class="form-control form-control-custom"
+                   placeholder="Adınız ve soyadınız" />
+        <ValidationMessage For="@(() => Member.FullName)" class="text-danger small mt-1" />
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label-custom">
+            <i class="bi bi-envelope-fill me-2 text-primary"></i>E-posta <span class="text-danger">*</span>
+        </label>
+        <InputText @bind-Value="Member.Email"
+                   class="form-control form-control-custom"
+                   type="email"
+                   placeholder="ornek@email.com" />
+        <ValidationMessage For="@(() => Member.Email)" class="text-danger small mt-1" />
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label-custom">
+            <i class="bi bi-telephone-fill me-2 text-primary"></i>Telefon <span class="text-danger">*</span>
+        </label>
+        <InputText @bind-Value="Member.Phone"
+                   class="form-control form-control-custom"
+                   type="tel"
+                   placeholder="05XX XXX XX XX" />
+        <ValidationMessage For="@(() => Member.Phone)" class="text-danger small mt-1" />
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label-custom">
+            <i class="bi bi-card-text me-2 text-primary"></i>TC Kimlik No <span class="text-danger">*</span>
+        </label>
+        <InputText @bind-Value="Member.TcKimlikNo"
+                   class="form-control form-control-custom"
+                   maxlength="11"
+                   placeholder="11 haneli TC Kimlik No" />
+        <ValidationMessage For="@(() => Member.TcKimlikNo)" class="text-danger small mt-1" />
+    </div>
+    <hr class="my-4" />
+
+    <h5 class="mb-3">
+        <i class="bi bi-credit-card-2-front-fill me-2 text-primary"></i>
+        Kart Bilgileri
+    </h5>
+
+    <div class="mb-3">
+        <label class="form-label-custom">
+            Tutar
+        </label>
+        <input class="form-control form-control-custom"
+               value="@((SelectedMembership?.Price ?? 0).ToString("C"))"
+               readonly />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label-custom">
+            Kart Üzerindeki İsim
+        </label>
+        <input class="form-control form-control-custom"
+               placeholder="Kart üzerindeki ad soyad" />
+    </div>
+
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-md-8">
+            <label class="form-label-custom">
+                Kart Numarası
+            </label>
+            <input class="form-control form-control-custom"
+                   placeholder="1234 5678 9012 3456"
+                   maxlength="19" />
+        </div>
+        <div class="col-6 col-md-2">
+            <label class="form-label-custom">
+                Son Kullanma
+            </label>
+            <input class="form-control form-control-custom"
+                   placeholder="AA/YY"
+                   maxlength="5" />
+        </div>
+        <div class="col-6 col-md-2">
+            <label class="form-label-custom">
+                CVV
+            </label>
+            <input class="form-control form-control-custom"
+                   placeholder="123"
+                   maxlength="4" />
+        </div>
+    </div>
+    <button type="submit"
+            class="btn btn-success-custom w-100"
+            disabled="@IsSubmitting">
+        @if (IsSubmitting)
+        {
+            <span class="loading-spinner me-2"
+                  style="width: 20px; height: 20px; border-width: 2px;"></span>
+        }
+        else
+        {
+            <i class="bi bi-check-circle-fill me-2"></i>
+        }
+        Üyeliği Onayla ve Satın Al
+    </button>
+</EditForm>
+
+
+@code {
+    // 🔹 Üst komponentten gelen model
+    [Parameter]
+    public Member Member { get; set; } = new();
+
+    // 🔹 Seçilen üyelik planı (fiyat vs için)
+    [Parameter]
+    public Membership? SelectedMembership { get; set; }
+
+    // 🔹 Kayıt tamamlandığında dışarıya haber verecek event
+    [Parameter]
+    public EventCallback<Member> OnSubmitted { get; set; }
+
+    // Şimdilik sadece tutarı taşıyoruz, ileride kart alanlarını ekleyeceğiz
+    private PaymentInfo payment = new();
+
+    // Submit butonunda loading kontrolü
+    private bool IsSubmitting { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (SelectedMembership is not null)
+        {
+            payment.Amount = SelectedMembership.Price;
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        IsSubmitting = true;
+        try
+        {
+            // Form valid olduğunda, doldurulmuş Member nesnesini üst komponente gönder
+            if (OnSubmitted.HasDelegate)
+            {
+                await OnSubmitted.InvokeAsync(Member);
+            }
+        }
+        finally
+        {
+            IsSubmitting = false;
+        }
+    }
+}
+

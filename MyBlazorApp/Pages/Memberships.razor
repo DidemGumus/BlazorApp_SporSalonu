@@ -1,0 +1,97 @@
+@page "/memberships"
+@using MyBlazorApp.Models
+@using MyBlazorApp.Services
+@using MyBlazorApp.Components
+@using Microsoft.AspNetCore.Components.Web
+@inject MembershipService MembershipService
+@inject LocalStorageService LocalStorageService
+@inject NavigationManager Navigation
+
+<PageTitle>Üyelik Planları</PageTitle>
+
+<div class="page-header">
+    <div class="container">
+        <h1 class="mb-0">
+            <i class="bi bi-ticket-perforated me-3"></i>Üyelik Planları
+        </h1>
+        <p class="mb-0 mt-2 opacity-75">Size en uygun üyelik planını seçin ve hemen başlayın</p>
+    </div>
+</div>
+
+<div class="container mt-5">
+    @if (hasActiveMembership)
+    {
+        <div class="alert alert-warning shadow mb-4">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill me-3" style="font-size: 2rem;"></i>
+                <div class="flex-grow-1">
+                    <h5 class="mb-1">Aktif Üyeliğiniz Bulunmaktadır</h5>
+                    <p class="mb-2">Şu anda aktif bir üyeliğiniz var. Yeni üyelik almak için mevcut üyeliğinizin süresinin dolması gerekmektedir.</p>
+                    <button class="btn btn-primary" @onclick="NavigateToDashboard">
+                        <i class="bi bi-speedometer2 me-2"></i>Üyelik Durumunu Görüntüle
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (isLoading)
+    {
+        <div class="text-center py-5">
+            <div class="loading-spinner mx-auto mb-3"></div>
+            <p class="text-muted">Planlar yükleniyor...</p>
+        </div>
+    }
+    else if (memberships.Any())
+    {
+        <MembershipList Memberships="memberships" OnMembershipSelected="HandleMembershipSelected" />
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <h4>Üyelik Planı Bulunamadı</h4>
+            <p class="text-muted">Şu anda aktif üyelik planı bulunmamaktadır.</p>
+        </div>
+    }
+</div>
+
+@code {
+    private List<Membership> memberships = new();
+    private bool isLoading = true;
+    private bool hasActiveMembership = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            memberships = await MembershipService.GetMembershipsAsync();
+            var existingMembership = await LocalStorageService.GetMembershipAsync();
+            hasActiveMembership = existingMembership != null && existingMembership.EndDate > DateTime.Now;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Hata: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void HandleMembershipSelected(Membership membership)
+    {
+        if (hasActiveMembership)
+        {
+            return;
+        }
+        Navigation.NavigateTo($"/memberships/{membership.Id}/register");
+    }
+
+    private void NavigateToDashboard()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+}
+
+

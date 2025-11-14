@@ -1,0 +1,49 @@
+@using MyBlazorApp.Models
+
+<div class="row g-4">
+    @foreach (var membership in Memberships)
+    {
+        <div class="col-md-4">
+            <div class="card h-100 membership-card">
+                <div class="card-body d-flex flex-column">
+                    <div class="text-center mb-3">
+                        <i class="bi bi-trophy-fill text-warning" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h5 class="card-title text-center">@membership.Name</h5>
+                    <div class="text-center mb-4">
+                        <div class="membership-price">@membership.Price.ToString("C")</div>
+                        <small class="text-muted">
+                            <i class="bi bi-calendar-check me-1"></i>@membership.DurationDays gün
+                        </small>
+                    </div>
+                    <ul class="feature-list flex-grow-1 mb-4">
+                        @foreach (var feature in membership.Features)
+                        {
+                            <li class="membership-feature">
+                                <i class="bi bi-check-circle-fill text-success"></i>@feature
+                            </li>
+                        }
+                    </ul>
+                    <button class="btn btn-primary-custom mt-auto w-100" @onclick="() => OnSelectMembership(membership)">
+                        <i class="bi bi-cart-plus me-2"></i>Satın Al
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<Membership> Memberships { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<Membership> OnMembershipSelected { get; set; }
+
+    private async Task OnSelectMembership(Membership membership)
+    {
+        await OnMembershipSelected.InvokeAsync(membership);
+    }
+}
+
+

@@ -1,0 +1,139 @@
+@page "/memberships/{Id}/register"
+@using MyBlazorApp.Models
+@using MyBlazorApp.Services
+@using MyBlazorApp.Components
+@using Microsoft.AspNetCore.Components.Web
+@inject MembershipService MembershipService
+@inject LocalStorageService LocalStorageService
+@inject NavigationManager Navigation
+
+<PageTitle>Üyelik Kaydı</PageTitle>
+
+<div class="page-header">
+    <div class="container">
+        <h1 class="mb-0">
+            <i class="bi bi-person-plus-fill me-3"></i>Üyelik Kaydı
+        </h1>
+        <p class="mb-0 mt-2 opacity-75">Bilgilerinizi doldurun ve üyeliğinizi tamamlayın</p>
+    </div>
+</div>
+
+<div class="container mt-5">
+    @if (isLoading)
+    {
+        <div class="text-center py-5">
+            <div class="loading-spinner mx-auto mb-3"></div>
+            <p class="text-muted">Plan bilgileri yükleniyor...</p>
+        </div>
+    }
+    else if (membership == null)
+    {
+        <div class="alert alert-danger shadow">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <strong>Hata:</strong> Üyelik planı bulunamadı.
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <MembershipDetails Membership="membership" />
+            </div>
+            <div class="col-lg-6">
+                <div class="card shadow membership-card">
+                    <div class="card-header text-white" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                        <h5 class="mb-0">
+                            <i class="bi bi-clipboard-data-fill me-2"></i>Kayıt Bilgileri
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <MemberRegistrationForm Member="member"
+                        SelectedMembership="membership"
+                        OnSubmitted="HandleRegistration" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(membershipCode))
+        {
+            <div class="alert alert-success shadow mt-4" style="border-left: 4px solid #28a745;">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-check-circle-fill me-3" style="font-size: 2rem;"></i>
+                    <div>
+                        <h4 class="mb-2">Kayıt Başarılı!</h4>
+                        <p class="mb-2">Üyelik kodunuz: <span class="membership-code-badge">@membershipCode</span></p>
+                        <p class="mb-0 small">Üyelik bilgileriniz kaydedildi. Dashboard sayfasına yönlendiriliyorsunuz...</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; } = "";
+
+    private Membership? membership;
+    private Member member = new();
+    private bool isLoading = true;
+    private string membershipCode = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var existingMembership = await LocalStorageService.GetMembershipAsync();
+            if (existingMembership != null && existingMembership.EndDate > DateTime.Now)
+            {
+                await Task.Delay(500);
+                Navigation.NavigateTo("/dashboard");
+                return;
+            }
+
+            membership = await MembershipService.GetMembershipByIdAsync(Id);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Hata: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task HandleRegistration(Member registeredMember)
+    {
+        if (membership == null) return;
+
+        try
+        {
+            var userMembership = new UserMembership
+            {
+                MembershipCode = MembershipService.GenerateMembershipCode(),
+                MembershipId = membership.Id,
+                MembershipName = membership.Name,
+                Price = membership.Price,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(membership.DurationDays),
+                Member = registeredMember
+            };
+
+            membershipCode = userMembership.MembershipCode;
+
+            await LocalStorageService.SaveMembershipAsync(userMembership);
+
+            await Task.Delay(2000);
+            Navigation.NavigateTo("/dashboard");
+        }
+        catch
+        {
+            
+        }
+    }
+}
+
+

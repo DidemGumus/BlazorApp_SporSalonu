@@ -1,0 +1,103 @@
+/* MembershipDetails Component Scoped Styles */
+
+[b-jctsya7w3s] .membership-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+[b-jctsya7w3s] .membership-card .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 1.5rem;
+}
+
+[b-jctsya7w3s] .membership-card .card-body {
+    padding: 2rem;
+}
+
+[b-jctsya7w3s] .membership-price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 1rem 0;
+}
+
+[b-jctsya7w3s] .membership-feature {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+[b-jctsya7w3s] .membership-feature:hover {
+    transform: translateX(5px);
+    color: #667eea;
+}
+
+[b-jctsya7w3s] .membership-feature i {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+}
+
+[b-jctsya7w3s] .feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+[b-jctsya7w3s] .feature-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+[b-jctsya7w3s] .feature-list li:last-child {
+    border-bottom: none;
+}
+
+[b-jctsya7w3s] .feature-list li:hover {
+    background-color: #f8f9fa;
+    padding-left: 0.5rem;
+}
+.membership-details-wrapper[b-jctsya7w3s] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Kart ve görseli ortalar */
+}
+
+/* Beyaz kart normal davransın */
+.membership-card[b-jctsya7w3s] {
+    width: 100%;
+    margin-bottom: 0 !important;
+}
+.mb-4[b-jctsya7w3s] {
+    margin-bottom: 0 !important;
+}
+
+/* Alttaki bağımsız kart görseli */
+.membership-extra-visual-outer[b-jctsya7w3s] {
+    margin-top: 0 !important;
+    padding-top: 0 !important;            /* Beyaz kart ile arası */
+    display: flex;
+    justify-content: center;
+}
+
+.membership-extra-visual-outer img[b-jctsya7w3s] {
+    max-width: 350px;            /* ss’deki gibi geniş */
+    width: 100%;
+    border-radius: 18px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    [b-jctsya7w3s] .membership-price {
+        font-size: 2rem;
+    }
+}
+

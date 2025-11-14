@@ -1,0 +1,107 @@
+/* MemberRegistrationForm Component Scoped Styles */
+
+::deep .form-control-custom {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::deep .form-control-custom:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    outline: none;
+}
+
+::deep .form-label-custom {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+::deep .btn-success-custom {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    color: white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+}
+
+::deep .btn-success-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(17, 153, 142, 0.6);
+    color: white;
+}
+
+::deep .btn-success-custom:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+::deep .loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #11998e;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+.payment-card-preview {
+    background: linear-gradient(135deg,#8e44ad,#3498db);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    color: #fff;
+    font-size: 0.9rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.payment-card-number {
+    letter-spacing: 2px;
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+}
+
+.payment-card-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+.bottom-image-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 120px;     /* kartlarla arası */
+    padding-bottom: 40px; /* sayfa sonuna boşluk */
+}
+
+.bottom-image-wrapper img {
+    max-width: 400px;     /* resmin genişliği */
+    opacity: 0.9;         /* istersen şık görünüm */
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+::deep .alert-danger {
+    border-radius: 8px;
+    border-left: 4px solid #dc3545;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    ::deep .form-control-custom {
+        padding: 0.65rem 0.85rem;
+    }
+}
+

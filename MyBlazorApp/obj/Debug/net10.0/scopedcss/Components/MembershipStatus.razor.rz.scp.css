@@ -1,0 +1,149 @@
+/* MembershipStatus Component Scoped Styles */
+
+.status-card[b-8sq120kcjo] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    color: rgb(254, 254, 254);
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.status-card[b-8sq120kcjo]::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: pulse-b-8sq120kcjo 3s ease-in-out infinite;
+}
+
+@keyframes pulse-b-8sq120kcjo {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.status-card .display-6[b-8sq120kcjo] {
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+[b-8sq120kcjo] .countdown-number {
+    display: inline-block;
+    animation: countdownPulse-b-8sq120kcjo 1s ease-in-out;
+}
+
+@keyframes countdownPulse-b-8sq120kcjo {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+[b-8sq120kcjo] .membership-code-badge {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+    animation: codePulse-b-8sq120kcjo 2s ease-in-out infinite;
+}
+
+@keyframes codePulse-b-8sq120kcjo {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+[b-8sq120kcjo] .stat-card {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    border-left: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+[b-8sq120kcjo] .stat-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+}
+
+[b-8sq120kcjo] .stat-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    
+}
+
+[b-8sq120kcjo] .stat-label {
+    color: #666;              /* koyu gri – beyaz kartın üstünde net görünür */
+    font-size: 0.9rem;
+    text-transform: none;     /* ÜYELİK PLANI yerine normal yazsın istersen */
+    letter-spacing: 0;        /* ister sıfır, istersen 0.5px bırakabilirsin */
+    font-weight: 600;
+}
+
+
+[b-8sq120kcjo] .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #999;
+}
+
+[b-8sq120kcjo] .empty-state i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+[b-8sq120kcjo] .btn-light {
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+[b-8sq120kcjo] .btn-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    color: #667eea;
+}
+.renew-outline[b-8sq120kcjo] {
+    border: 2px solid rgba(255,255,255,0.6) !important;
+    background-color: transparent !important;
+    color: #fff !important;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.renew-outline:hover[b-8sq120kcjo] {
+    background-color: rgba(255,255,255,0.15) !important;
+    border-color: #fff !important;
+    color: #fff !important;
+    transform: translateY(-2px);
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .status-card[b-8sq120kcjo] {
+        padding: 1.5rem;
+    }
+    
+    [b-8sq120kcjo] .membership-code-badge {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+    }
+}
+

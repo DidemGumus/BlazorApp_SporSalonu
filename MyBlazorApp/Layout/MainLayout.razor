@@ -1,0 +1,21 @@
+﻿@inherits LayoutComponentBase
+@using MyBlazorApp.Layout
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4 d-none d-md-flex">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-dumbbell me-2 text-primary"></i>
+                <span class="fw-bold">Spor Salonu Üyelik Sistemi</span>
+            </div>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>

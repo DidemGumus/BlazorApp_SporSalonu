@@ -1,0 +1,89 @@
+﻿@page "/"
+@using MyBlazorApp.Services
+@using Microsoft.AspNetCore.Components.Web
+@inject LocalStorageService LocalStorageService
+@inject NavigationManager Navigation
+
+<PageTitle>Ana Sayfa</PageTitle>
+
+<div class="page-header">
+    <div class="container">
+        <h1 class="mb-0">
+            <i class="bi bi-house-door-fill me-3"></i>Hoş Geldiniz
+        </h1>
+        <p class="mb-0 mt-2 opacity-75">Spor Salonu Üyelik Takip Sistemine hoş geldiniz</p>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow membership-card h-100">
+                <div class="card-body text-center p-5">
+                    <i class="bi bi-trophy-fill text-warning" style="font-size: 4rem;"></i>
+                    <h3 class="mt-4 mb-3">Üyelik Planları</h3>
+                    <p class="text-muted mb-4">Size en uygun üyelik planını seçin ve spor salonuna hemen başlayın</p>
+                    <button class="btn btn-primary-custom" @onclick="NavigateToMemberships">
+                        <i class="bi bi-arrow-right me-2"></i>Planları Görüntüle
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow membership-card h-100">
+                <div class="card-body text-center p-5">
+                    <i class="bi bi-speedometer2 text-primary" style="font-size: 4rem;"></i>
+                    <h3 class="mt-4 mb-3">Üyelik Durumu</h3>
+                    <p class="text-muted mb-4">Aktif üyeliğinizi görüntüleyin ve kalan sürenizi takip edin</p>
+                    <button class="btn btn-success-custom" @onclick="NavigateToDashboard">
+                        <i class="bi bi-arrow-right me-2"></i>Dashboard'a Git
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (hasActiveMembership)
+    {
+        <div class="alert alert-info shadow mt-4">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-info-circle-fill me-3" style="font-size: 2rem;"></i>
+                <div>
+                    <h5 class="mb-1">Aktif Üyeliğiniz Var</h5>
+                    <p class="mb-0">Üyelik durumunuzu görmek için dashboard sayfasını ziyaret edebilirsiniz.</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private bool hasActiveMembership = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                var membership = await LocalStorageService.GetMembershipAsync();
+                hasActiveMembership = membership != null && membership.EndDate > DateTime.Now;
+                StateHasChanged();
+            }
+            catch
+            {
+                hasActiveMembership = false;
+            }
+        }
+    }
+
+    private void NavigateToMemberships()
+    {
+        Navigation.NavigateTo("/memberships");
+    }
+
+    private void NavigateToDashboard()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+}

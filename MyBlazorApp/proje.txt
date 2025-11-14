@@ -1,0 +1,90 @@
+PROJE ÜYELERİ
+=============
+
+- Öğrenci Numarası: 1220505038
+- Ad Soyad: Zeynep UĞUZ
+
+- Öğrenci Numarası: 1220505059
+- Ad Soyad: Didem GÜMÜŞ
+
+- Öğrenci Numarası: 1220505036
+- Ad Soyad: Yüksel UYGUN
+
+- Öğrenci Numarası: 1220505055
+- Ad Soyad: Kadir IR
+
+
+GÖREV DAĞILIMI
+==============
+
+Zeynep UĞUZ (1220505038): Görevi -> Veri modelleri, servis katmanı ve JSON veri yönetimi
+
+- Veri modellerinin oluşturulması (Models klasörü)
+  * Membership.cs - Üyelik planı modeli
+  * Member.cs - Üye bilgileri modeli (DataAnnotations attribute'ları ile: [Required], [EmailAddress], [Phone], [StringLength])
+  * UserMembership.cs - Kullanıcı üyelik durumu modeli
+- MembershipService geliştirilmesi
+  * JSON dosyasından veri okuma işlevselliği (GetMembershipsAsync)
+  * Üyelik planı sorgulama (GetMembershipByIdAsync)
+  * Üyelik kodu üretme mantığı (GenerateMembershipCode)
+- memberships.json dosyasının hazırlanması ve veri yapısının tasarlanması
+- Proje mimarisinin tasarlanması ve model katmanının yapılandırılması
+
+
+Didem GÜMÜŞ (1220505059): Görevi -> Durum yönetimi (localStorage), servis yapılandırması ve hata sayfası
+
+- LocalStorageService geliştirilmesi
+  * Üyelik bilgilerini kaydetme (SaveMembershipAsync)
+  * Üyelik bilgilerini okuma (GetMembershipAsync)
+  * Üyelik bilgilerini temizleme (ClearMembershipAsync)
+- Durum yönetimi entegrasyonu (localStorage ile veri kalıcılığı)
+- Form doğrulama ve validasyon mantığının tasarlanması
+  * ValidationMessage ve ValidationSummary kullanımı
+  * EditForm ve DataAnnotationsValidator entegrasyonu
+  * Form doğrulama akışının koordinasyonu
+- Program.cs yapılandırması ve servis kayıtları (Dependency Injection)
+- _Imports.razor dosyasının yapılandırılması
+- NotFound.razor sayfasının geliştirilmesi (404 sayfası)
+
+
+Yüksel UYGUN (1220505036): Görevi -> Bileşen geliştirme (MembershipList, MembershipDetails), sayfa yapısı (Home, Memberships) ve layout
+
+- Bileşenlerin geliştirilmesi (Components klasörü)
+  * MembershipList.razor - Üyelik planları listesi bileşeni
+  * MembershipList.razor.css - Üyelik listesi bileşeni stilleri
+  * MembershipDetails.razor - Üyelik planı detay bileşeni
+  * MembershipDetails.razor.css - Üyelik detay bileşeni stilleri
+- Bileşenler arası veri akışı
+  * [Parameter] kullanımı ile veri aktarımı
+  * EventCallback kullanımı ile olay yönetimi
+- Sayfaların geliştirilmesi (Pages klasörü)
+  * Home.razor - Ana sayfa
+  * Memberships.razor - Üyelik planları sayfası (/memberships)
+  * (CSS: Global membership.css kullanılmıştır)
+- Layout yapısı (Layout klasörü)
+  * MainLayout.razor - Ana layout yapısı
+  * MainLayout.razor.css - Ana layout stilleri
+  * NavMenu.razor - Navigasyon menüsü
+  * NavMenu.razor.css - Navigasyon menüsü stilleri
+
+
+Kadir IR (1220505055): Görevi -> Bileşen geliştirme (MemberRegistrationForm, MembershipStatus), sayfa yapısı (MembershipRegister, Dashboard), CSS tasarımı ve UI/UX
+
+- Bileşenlerin geliştirilmesi (Components klasörü)
+  * MemberRegistrationForm.razor - Üye kayıt formu bileşeni (EditForm, DataAnnotationsValidator, ValidationMessage kullanımı)
+  * MemberRegistrationForm.razor.css - Kayıt formu bileşeni stilleri
+  * MembershipStatus.razor - Üyelik durumu ve geri sayım bileşeni
+  * MembershipStatus.razor.css - Üyelik durumu bileşeni stilleri
+- Sayfaların geliştirilmesi (Pages klasörü)
+  * MembershipRegister.razor - Üyelik kayıt sayfası (/memberships/{id}/register)
+  * Dashboard.razor - Üyelik durumu sayfası (/dashboard)
+  * (CSS: Global membership.css kullanılmıştır)
+- Global CSS tasarımı (wwwroot/css/membership.css)
+  * Profesyonel gradient ve animasyon stilleri
+  * Kart, buton ve form stilleri
+  * Loading spinner ve animasyonlar
+- Responsive tasarım uygulaması (mobil/masaüstü uyumu)
+- UI/UX iyileştirmeleri ve görsel tasarım
+- Bootstrap Icons entegrasyonu ve ikon kullanımı
+- wwwroot/index.html dosyasının yapılandırılması (CSS ve icon linkleri)
+

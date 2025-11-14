@@ -1,0 +1,379 @@
+@page "/dashboard"
+@using MyBlazorApp.Models
+@using MyBlazorApp.Services
+@using MyBlazorApp.Components
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Forms
+
+
+@inject LocalStorageService LocalStorageService
+@inject NavigationManager Navigation
+@inject MembershipService MembershipService
+
+<PageTitle>Dashboard</PageTitle>
+
+@if (showMessage)
+{
+    <div class="overlay">
+        <div class="message-box">
+            @successMessage
+        </div>
+    </div>
+}
+@if (showContactMessage)
+{
+    <div class="update-toast">
+        @contactMessage
+    </div>
+}
+
+
+
+<div class="page-header">
+    <div class="container">
+        <h1 class="mb-0">
+            <i class="bi bi-speedometer2 me-3"></i>Üyelik Durumu
+        </h1>
+        <p class="mb-0 mt-2 opacity-75">Üyelik bilgilerinizi ve kalan sürenizi görüntüleyin</p>
+    </div>
+</div>
+
+<div class="container mt-5">
+    @if (isLoading)
+    {
+        <div class="text-center py-5">
+            <div class="loading-spinner mx-auto mb-3"></div>
+            <p class="text-muted">Bilgiler yükleniyor...</p>
+        </div>
+    }
+    else if (userMembership != null)
+    {
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <MembershipStatus UserMembership="userMembership"
+                  OnRenew="HandleRenew"
+                  OnCancel="HandleCancel" />
+
+            </div>
+<div class="col-lg-4">
+    <div class="card shadow membership-card">
+        <div class="card-header text-white d-flex justify-content-between align-items-center"
+             style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <h5 class="mb-0">
+                <i class="bi bi-person-badge me-2"></i>Üye Bilgileri
+            </h5>
+
+            <button class="btn btn-sm btn-light"
+                    @onclick="ToggleEditContact">
+                <i class="bi bi-pencil-square me-1"></i>
+                @(isEditingContact ? "Vazgeç" : "Düzenle")
+            </button>
+        </div>
+
+        <div class="card-body">
+
+            <!-- 🔵 AVATAR KISMI (YENİ) -->
+            <div class="text-center mb-3">
+                <img src="@CurrentAvatar"
+                     alt="Avatar"
+                     class="profile-avatar" />
+
+                @if (isEditingContact)
+                {
+                    <div class="mt-2">
+                        <label class="btn btn-sm btn-outline-primary">
+                            Avatar Seç
+                            <InputFile OnChange="OnAvatarChange" accept="image/*" />
+                        </label>
+                    </div>
+                }
+            </div>
+
+            <!-- Ad Soyad -->
+            <div class="mb-3">
+                <div class="stat-label mb-1">
+                    <i class="bi bi-person-fill me-2 text-primary"></i>Ad Soyad
+                </div>
+                <div class="fw-bold">@userMembership.Member.FullName</div>
+            </div>
+            <hr>
+
+            <!-- E-posta -->
+            <div class="mb-3">
+                <div class="stat-label mb-1">
+                    <i class="bi bi-envelope-fill me-2 text-primary"></i>E-posta
+                </div>
+
+                @if (isEditingContact)
+                {
+                    <input class="form-control" @bind="editEmail" />
+                }
+                else
+                {
+                    <div>@userMembership.Member.Email</div>
+                }
+            </div>
+            <hr>
+
+            <!-- Telefon -->
+            <div class="mb-3">
+                <div class="stat-label mb-1">
+                    <i class="bi bi-telephone-fill me-2 text-primary"></i>Telefon
+                </div>
+
+                @if (isEditingContact)
+                {
+                    <input class="form-control" @bind="editPhone" />
+                }
+                else
+                {
+                    <div>@userMembership.Member.Phone</div>
+                }
+            </div>
+            <hr>
+
+            <!-- TC Kimlik -->
+            <div class="mb-0">
+                <div class="stat-label mb-1">
+                    <i class="bi bi-card-text me-2 text-primary"></i>TC Kimlik No
+                </div>
+                <div>@userMembership.Member.TcKimlikNo</div>
+            </div>
+
+            @if (isEditingContact)
+            {
+                <button class="btn btn-primary-custom w-100 mt-3"
+                        @onclick="SaveContactChanges">
+                    <i class="bi bi-check-circle me-1"></i>
+                    Bilgileri Kaydet
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <h4>Üyelik Bulunamadı</h4>
+            <p class="text-muted mb-4">Henüz bir üyeliğiniz bulunmamaktadır. Üyelik planlarını görüntülemek için aşağıdaki butona tıklayın.</p>
+            <button class="btn btn-primary-custom" @onclick="NavigateToMemberships">
+                <i class="bi bi-ticket-perforated me-2"></i>Üyelik Planlarını Görüntüle
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    private UserMembership? userMembership;
+    private bool isLoading = true;
+    private string? successMessage;
+    private bool showMessage = false;
+    private bool isEditingContact = false;
+    private string? editEmail;
+    private string? editPhone;
+
+    private string CurrentAvatar =>
+        string.IsNullOrEmpty(userMembership?.Member.AvatarUrl)
+            ? "img/default-avatar.png"
+            : userMembership.Member.AvatarUrl;
+
+    private string? contactMessage;
+    private bool showContactMessage;
+
+    private async Task ShowMessage(string message)
+    {
+        successMessage = message;
+        showMessage = true;
+        StateHasChanged();
+
+        await Task.Delay(3000); // 3 saniye bekle
+        showMessage = false;
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            userMembership = await LocalStorageService.GetMembershipAsync();
+
+            if (userMembership is not null)
+            {
+                editEmail = userMembership.Member.Email;
+                editPhone = userMembership.Member.Phone;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Hata: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+
+    // Üyeliği Yenile butonuna basılınca çalışacak
+private async Task HandleRenew()
+{
+    if (userMembership is null)
+        return;
+
+    var today = DateTime.Today;
+
+    // Plan süresi: Örn. 30, 180, 365 gün
+    var duration = userMembership.DurationDays;
+
+    // Eğer DurationDays ayarlanmamışsa, mevcut üyelikten hesapla
+    if (duration <= 0)
+    {
+        var diff = (userMembership.EndDate.Date - userMembership.StartDate.Date).Days;
+        duration = diff > 0 ? diff : 30; // yine de 0 çıkarsa 30 gün varsay
+    }
+
+    // 🔹 Eski davranış: eski bitişe ekliyorduk
+    // var newStartDate = userMembership.EndDate.Date < today ? today : userMembership.EndDate.Date;
+    // var newEndDate = newStartDate.AddDays(duration);
+
+    // 🔹 Yeni istediğin davranış:
+    //    - Her yenilemede üyelik BUGÜN'den başlasın
+    //    - Plan süresi kadar ileri bir bitiş tarihi olsun
+    userMembership.StartDate = today;
+    userMembership.EndDate   = today.AddDays(duration);
+    userMembership.IsActive  = true;
+
+    // Test kodu yerine gerçek bir kod üretelim
+    userMembership.MembershipCode = MembershipService.GenerateMembershipCode();
+
+    await LocalStorageService.SaveMembershipAsync(userMembership);
+    await ShowMessage("Üyelik başarıyla yenilendi!");
+}
+
+
+    // Üyeliği İptal Et butonuna basılınca çalışacak
+    private async Task HandleCancel()
+    {
+        if (userMembership is null)
+            return;
+
+        userMembership.IsActive = false;
+        userMembership.EndDate  = DateTime.Today;
+
+        await LocalStorageService.SaveMembershipAsync(userMembership);
+        await ShowMessage("Üyelik iptal edildi.");
+        // Kullanıcıyı yeni plan seçmesi için yönlendirebilirsin
+        Navigation.NavigateTo("/memberships");
+    }
+        private void ToggleEditContact()
+    {
+        if (userMembership is null)
+            return;
+
+        // Mod değiştirirken her seferinde mevcut veriyi doldur
+        if (!isEditingContact)
+        {
+            editEmail = userMembership.Member.Email;
+            editPhone = userMembership.Member.Phone;
+        }
+
+        isEditingContact = !isEditingContact;
+    }
+
+    private void CancelEditContact()
+    {
+        isEditingContact = false;
+        // iptalde alanları eski hâle döndür
+        if (userMembership is not null)
+        {
+            editEmail = userMembership.Member.Email;
+            editPhone = userMembership.Member.Phone;
+        }
+    }
+
+    
+
+        // Avatar dosyası Base64 olarak burada tutulacak (isteğe bağlı)
+        private string? newAvatarBase64;
+
+
+        // 📌 Avatar dosyası seçildiğinde çalışır
+        private async Task OnAvatarChange(InputFileChangeEventArgs e)
+        {
+            var file = e.File;
+
+            using var stream = file.OpenReadStream(maxAllowedSize: 4*1024 * 1024); // 1MB
+            using var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+
+            var base64 = Convert.ToBase64String(ms.ToArray());
+            newAvatarBase64 = $"data:{file.ContentType};base64,{base64}";
+
+            // Ekrandan hemen avatarı göstermek için
+            if (userMembership is not null)
+                userMembership.Member.AvatarUrl = newAvatarBase64;
+
+            StateHasChanged();
+        }
+
+
+        //  E-posta, telefon VE avatar birlikte burada kaydedilir
+        private async Task SaveContactChanges()
+        {
+            if (userMembership is null)
+                return;
+
+            // Boş bırakılmasın
+            if (string.IsNullOrWhiteSpace(editEmail) ||
+                string.IsNullOrWhiteSpace(editPhone))
+            {
+                contactMessage = "E-posta ve telefon boş bırakılamaz.";
+                showContactMessage = true;
+                StateHasChanged();
+                await Task.Delay(3000);
+                showContactMessage = false;
+                StateHasChanged();
+                return;
+            }
+
+            // 🔹 E-posta + Telefon güncelle
+            userMembership.Member.Email = editEmail!;
+            userMembership.Member.Phone = editPhone!;
+
+            // 🔹 Avatar seçilmişse onu da güncelle
+            if (!string.IsNullOrEmpty(newAvatarBase64))
+            {
+                userMembership.Member.AvatarUrl = newAvatarBase64;
+            }
+
+            // 🔹 Tüm bilgileri kaydet
+            await LocalStorageService.SaveMembershipAsync(userMembership);
+
+            // Düzenleme modunu kapat
+            isEditingContact = false;
+
+            // 🔹 Başarı mesajı
+            contactMessage = "Bilgileriniz başarıyla güncellendi.";
+            showContactMessage = true;
+
+            StateHasChanged();
+            await Task.Delay(3000);
+
+            showContactMessage = false;
+            StateHasChanged();
+        }
+
+
+        // Sayfa yönlendirme
+        private void NavigateToMemberships()
+        {
+            Navigation.NavigateTo("/memberships");
+        }
+    }}
+    
+
+

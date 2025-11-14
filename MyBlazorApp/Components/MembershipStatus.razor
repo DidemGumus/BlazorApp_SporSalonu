@@ -1,0 +1,164 @@
+@using MyBlazorApp.Models
+@implements IAsyncDisposable
+
+@if (UserMembership != null)
+{
+    <div class="status-card">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="mb-0">
+                <i class="bi bi-shield-check-fill me-2"></i>
+                @(IsActiveDisplay ? "Aktif Üyelik" : "Pasif Üyelik")
+            </h5>
+
+            <span class=@($"badge px-3 py-2 {(IsActiveDisplay ? "bg-light text-dark" : "bg-secondary text-white")}")>
+                <i class="bi bi-clock-history me-1"></i>
+                @(IsActiveDisplay ? "Aktif" : "Pasif")
+            </span>
+        </div>
+        
+        <div class="mb-4 text-center">
+            <div class="membership-code-badge">
+                <i class="bi bi-ticket-perforated me-2"></i>@UserMembership.MembershipCode
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-6">
+                <div class="stat-card bg-white bg-opacity-20 p-3 rounded">
+                    <div class="stat-label mb-2" style="color:#555;">
+                        Üyelik Planı
+                    </div>
+                    <div class="stat-value fw-bold"
+                        style="font-size: 1.1rem; color:#222;">
+                        @UserMembership.MembershipName
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="stat-card bg-white bg-opacity-20 p-3 rounded">
+                    <div class="stat-label mb-2" style="color:#555;">
+                        Ödenen Tutar
+                    </div>
+                    <div class="stat-value fw-bold"
+                        style="font-size: 1.1rem; color:#222;">
+                        @UserMembership.Price.ToString("C")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="mb-4">
+            <div class="d-flex justify-content-between mb-2">
+                <span><i class="bi bi-calendar-event me-2"></i>Başlangıç</span>
+                <strong>@UserMembership.StartDate.ToString("dd.MM.yyyy")</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span><i class="bi bi-calendar-x me-2"></i>Bitiş</span>
+                <strong>@UserMembership.EndDate.ToString("dd.MM.yyyy")</strong>
+            </div>
+        </div>
+
+        <div class="text-center mb-4 p-4 bg-white bg-opacity-10 rounded">
+            <div class="text-white-50 small mb-2">Kalan Süre</div>
+            <div class="display-6 text-white countdown-number">@RemainingDays</div>
+            <div class="text-white-50">gün</div>
+            <div class="text-white-50 small mt-2">
+                <i class="bi bi-clock me-1"></i>@RemainingHours saat @RemainingMinutes dakika
+            </div>
+        </div>
+
+        <div class="button-row d-flex flex-column flex-md-row gap-2 mt-4"
+            style="pointer-events:auto; position:relative; z-index:100;">
+
+            <!-- Yenile butonu her zaman görünsün -->
+            <button type="button"
+                    class="btn renew-outline flex-fill"
+                    @onclick="OnRenew">
+                <i class="bi bi-arrow-repeat me-2"></i> Üyeliği Yenile
+            </button>
+
+            <!-- İPTAL ET sadece aktif üyelik varsa görünsün -->
+            @if (UserMembership?.IsActive == true)
+            {
+                <button type="button"
+                        class="btn btn-outline-danger flex-fill"
+                        @onclick="OnCancel">
+                    <i class="bi bi-x-circle me-2"></i> Üyeliği İptal Et
+                </button>
+            }
+        </div>
+
+    
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="bi bi-inbox"></i>
+        <h4>Aktif Üyelik Bulunamadı</h4>
+        <p class="text-muted">Henüz bir üyeliğiniz bulunmamaktadır.</p>
+    </div>
+}
+
+@code
+{
+    [Parameter] public UserMembership? UserMembership { get; set; }
+
+    // Dashboard burada HandleRenew / HandleCancel bağlıyor
+    [Parameter] public EventCallback OnRenew { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    private int RemainingDays { get; set; }
+    private int RemainingHours { get; set; }
+    private int RemainingMinutes { get; set; }
+    private bool IsActiveDisplay =>
+    (UserMembership?.IsActive ?? false) && RemainingDays > 0;
+
+    private System.Threading.Timer? _timer;
+
+    protected override void OnParametersSet()
+    {
+        if (UserMembership != null)
+        {
+            UpdateRemainingTime();
+
+            _timer ??= new System.Threading.Timer(_ =>
+            {
+                InvokeAsync(() =>
+                {
+                    UpdateRemainingTime();
+                    StateHasChanged();
+                });
+            }, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+        }
+    }
+
+    private void UpdateRemainingTime()
+    {
+        if (UserMembership == null) return;
+
+        var now = DateTime.Now;
+        var endDate = UserMembership.EndDate;
+
+        if (endDate > now)
+        {
+            var remaining = endDate - now;
+            RemainingDays    = remaining.Days;
+            RemainingHours   = remaining.Hours;
+            RemainingMinutes = remaining.Minutes;
+        }
+        else
+        {
+            RemainingDays = 0;
+            RemainingHours = 0;
+            RemainingMinutes = 0;
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        _timer?.Dispose();
+        await ValueTask.CompletedTask;
+    }
+}

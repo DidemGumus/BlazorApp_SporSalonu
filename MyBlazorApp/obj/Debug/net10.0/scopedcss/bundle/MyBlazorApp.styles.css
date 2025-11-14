@@ -1,0 +1,734 @@
+/* /Components/MemberRegistrationForm.razor.rz.scp.css */
+/* MemberRegistrationForm Component Scoped Styles */
+
+[b-l68m03p1g2] .form-control-custom {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[b-l68m03p1g2] .form-control-custom:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    outline: none;
+}
+
+[b-l68m03p1g2] .form-label-custom {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+[b-l68m03p1g2] .btn-success-custom {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    color: white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+}
+
+[b-l68m03p1g2] .btn-success-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(17, 153, 142, 0.6);
+    color: white;
+}
+
+[b-l68m03p1g2] .btn-success-custom:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+[b-l68m03p1g2] .loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #11998e;
+    border-radius: 50%;
+    animation: spin-b-l68m03p1g2 1s linear infinite;
+}
+.payment-card-preview[b-l68m03p1g2] {
+    background: linear-gradient(135deg,#8e44ad,#3498db);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    color: #fff;
+    font-size: 0.9rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.payment-card-number[b-l68m03p1g2] {
+    letter-spacing: 2px;
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+}
+
+.payment-card-footer[b-l68m03p1g2] {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+.bottom-image-wrapper[b-l68m03p1g2] {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 120px;     /* kartlarla arası */
+    padding-bottom: 40px; /* sayfa sonuna boşluk */
+}
+
+.bottom-image-wrapper img[b-l68m03p1g2] {
+    max-width: 400px;     /* resmin genişliği */
+    opacity: 0.9;         /* istersen şık görünüm */
+}
+
+
+@keyframes spin-b-l68m03p1g2 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+[b-l68m03p1g2] .alert-danger {
+    border-radius: 8px;
+    border-left: 4px solid #dc3545;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    [b-l68m03p1g2] .form-control-custom {
+        padding: 0.65rem 0.85rem;
+    }
+}
+
+/* /Components/MembershipDetails.razor.rz.scp.css */
+/* MembershipDetails Component Scoped Styles */
+
+[b-jctsya7w3s] .membership-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+[b-jctsya7w3s] .membership-card .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 1.5rem;
+}
+
+[b-jctsya7w3s] .membership-card .card-body {
+    padding: 2rem;
+}
+
+[b-jctsya7w3s] .membership-price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 1rem 0;
+}
+
+[b-jctsya7w3s] .membership-feature {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+[b-jctsya7w3s] .membership-feature:hover {
+    transform: translateX(5px);
+    color: #667eea;
+}
+
+[b-jctsya7w3s] .membership-feature i {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+}
+
+[b-jctsya7w3s] .feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+[b-jctsya7w3s] .feature-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+[b-jctsya7w3s] .feature-list li:last-child {
+    border-bottom: none;
+}
+
+[b-jctsya7w3s] .feature-list li:hover {
+    background-color: #f8f9fa;
+    padding-left: 0.5rem;
+}
+.membership-details-wrapper[b-jctsya7w3s] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Kart ve görseli ortalar */
+}
+
+/* Beyaz kart normal davransın */
+.membership-card[b-jctsya7w3s] {
+    width: 100%;
+    margin-bottom: 0 !important;
+}
+.mb-4[b-jctsya7w3s] {
+    margin-bottom: 0 !important;
+}
+
+/* Alttaki bağımsız kart görseli */
+.membership-extra-visual-outer[b-jctsya7w3s] {
+    margin-top: 0 !important;
+    padding-top: 0 !important;            /* Beyaz kart ile arası */
+    display: flex;
+    justify-content: center;
+}
+
+.membership-extra-visual-outer img[b-jctsya7w3s] {
+    max-width: 350px;            /* ss’deki gibi geniş */
+    width: 100%;
+    border-radius: 18px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    [b-jctsya7w3s] .membership-price {
+        font-size: 2rem;
+    }
+}
+
+/* /Components/MembershipList.razor.rz.scp.css */
+/* MembershipList Component Scoped Styles */
+
+[b-a3hqnne9j7] .membership-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+[b-a3hqnne9j7] .membership-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+[b-a3hqnne9j7] .membership-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+[b-a3hqnne9j7] .membership-card:hover::before {
+    transform: scaleX(1);
+}
+
+[b-a3hqnne9j7] .membership-card .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[b-a3hqnne9j7] .membership-price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 1rem 0;
+}
+
+[b-a3hqnne9j7] .membership-feature {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+[b-a3hqnne9j7] .membership-feature:hover {
+    transform: translateX(5px);
+    color: #667eea;
+}
+
+[b-a3hqnne9j7] .membership-feature i {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+}
+
+[b-a3hqnne9j7] .btn-primary-custom {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+
+[b-a3hqnne9j7] .btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    color: white;
+}
+
+[b-a3hqnne9j7] .feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+[b-a3hqnne9j7] .feature-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+[b-a3hqnne9j7] .feature-list li:last-child {
+    border-bottom: none;
+}
+
+[b-a3hqnne9j7] .feature-list li:hover {
+    background-color: #f8f9fa;
+    padding-left: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    [b-a3hqnne9j7] .membership-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    [b-a3hqnne9j7] .membership-price {
+        font-size: 2rem;
+    }
+}
+
+/* /Components/MembershipStatus.razor.rz.scp.css */
+/* MembershipStatus Component Scoped Styles */
+
+.status-card[b-8sq120kcjo] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    color: rgb(254, 254, 254);
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.status-card[b-8sq120kcjo]::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: pulse-b-8sq120kcjo 3s ease-in-out infinite;
+}
+
+@keyframes pulse-b-8sq120kcjo {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.status-card .display-6[b-8sq120kcjo] {
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+[b-8sq120kcjo] .countdown-number {
+    display: inline-block;
+    animation: countdownPulse-b-8sq120kcjo 1s ease-in-out;
+}
+
+@keyframes countdownPulse-b-8sq120kcjo {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+[b-8sq120kcjo] .membership-code-badge {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+    animation: codePulse-b-8sq120kcjo 2s ease-in-out infinite;
+}
+
+@keyframes codePulse-b-8sq120kcjo {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+[b-8sq120kcjo] .stat-card {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    border-left: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+[b-8sq120kcjo] .stat-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+}
+
+[b-8sq120kcjo] .stat-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    
+}
+
+[b-8sq120kcjo] .stat-label {
+    color: #666;              /* koyu gri – beyaz kartın üstünde net görünür */
+    font-size: 0.9rem;
+    text-transform: none;     /* ÜYELİK PLANI yerine normal yazsın istersen */
+    letter-spacing: 0;        /* ister sıfır, istersen 0.5px bırakabilirsin */
+    font-weight: 600;
+}
+
+
+[b-8sq120kcjo] .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #999;
+}
+
+[b-8sq120kcjo] .empty-state i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+[b-8sq120kcjo] .btn-light {
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+[b-8sq120kcjo] .btn-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    color: #667eea;
+}
+.renew-outline[b-8sq120kcjo] {
+    border: 2px solid rgba(255,255,255,0.6) !important;
+    background-color: transparent !important;
+    color: #fff !important;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.renew-outline:hover[b-8sq120kcjo] {
+    background-color: rgba(255,255,255,0.15) !important;
+    border-color: #fff !important;
+    color: #fff !important;
+    transform: translateY(-2px);
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .status-card[b-8sq120kcjo] {
+        padding: 1.5rem;
+    }
+    
+    [b-8sq120kcjo] .membership-code-badge {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+    }
+}
+
+/* /Layout/MainLayout.razor.rz.scp.css */
+.page[b-pv57ownmzj] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main[b-pv57ownmzj] {
+    flex: 1;
+    background-color: transparent !important;
+}
+
+.sidebar[b-pv57ownmzj] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-pv57ownmzj] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row[b-pv57ownmzj]  a, .top-row[b-pv57ownmzj]  .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+        text-decoration: none;
+    }
+
+    .top-row[b-pv57ownmzj]  a:hover, .top-row[b-pv57ownmzj]  .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .top-row[b-pv57ownmzj]  a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row[b-pv57ownmzj] {
+        justify-content: space-between;
+    }
+
+    .top-row[b-pv57ownmzj]  a, .top-row[b-pv57ownmzj]  .btn-link {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-pv57ownmzj] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-pv57ownmzj] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-pv57ownmzj] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row.auth[b-pv57ownmzj]  a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row[b-pv57ownmzj], article[b-pv57ownmzj] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+/* /Layout/NavMenu.razor.rz.scp.css */
+.navbar-toggler[b-soj9rbgjfe] {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-row[b-soj9rbgjfe] {
+    min-height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand[b-soj9rbgjfe] {
+    font-size: 1.1rem;
+}
+
+.bi[b-soj9rbgjfe] {
+    display: inline-block;
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+    top: -1px;
+    background-size: cover;
+}
+
+.bi-house-door-fill-nav-menu[b-soj9rbgjfe] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-house-door-fill' viewBox='0 0 16 16'%3E%3Cpath d='M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z'/%3E%3C/svg%3E");
+}
+
+.bi-plus-square-fill-nav-menu[b-soj9rbgjfe] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-plus-square-fill' viewBox='0 0 16 16'%3E%3Cpath d='M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z'/%3E%3C/svg%3E");
+}
+
+.bi-list-nested-nav-menu[b-soj9rbgjfe] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-list-nested' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E");
+}
+
+.nav-item[b-soj9rbgjfe] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type[b-soj9rbgjfe] {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type[b-soj9rbgjfe] {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item[b-soj9rbgjfe]  a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+.nav-item[b-soj9rbgjfe]  a.active {
+    background-color: rgba(255,255,255,0.37);
+    color: white;
+}
+
+.nav-item[b-soj9rbgjfe]  a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-soj9rbgjfe] {
+        display: none;
+    }
+
+    .collapse[b-soj9rbgjfe] {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+
+    .nav-scrollable[b-soj9rbgjfe] {
+        /* Allow sidebar to scroll for tall menus */
+        height: calc(100vh - 3.5rem);
+        overflow-y: auto;
+    }
+}
+/* /Pages/Dashboard.razor.rz.scp.css */
+.toast-message[b-z4najtkjxy] {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #4caf50, #6fdc6f);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+    z-index: 9999;
+    animation: fadeInOut-b-z4najtkjxy 3s ease-in-out;
+}
+
+@keyframes fadeInOut-b-z4najtkjxy {
+    0% { opacity: 0; transform: translate(-50%, -20px); }
+    10% { opacity: 1; transform: translate(-50%, 0); }
+    90% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+/* Arka plan karartma */
+.overlay[b-z4najtkjxy] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45); /* yarı karanlık */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn-b-z4najtkjxy 0.3s ease-out;
+}
+
+/* Ortadaki mesaj kutusu */
+.message-box[b-z4najtkjxy] {
+    background: white;
+    padding: 24px 35px;
+    border-radius: 14px;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 600;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+    text-align: center;
+    min-width: 300px;
+    max-width: 400px;
+    animation: popIn-b-z4najtkjxy 0.35s ease-out;
+}
+.update-toast[b-z4najtkjxy] {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 23, 42, 0.95);
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    z-index: 9999;
+    font-weight: 500;
+    backdrop-filter: blur(8px);
+}
+.profile-avatar[b-z4najtkjxy] {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+
+/* Animasyonlar */
+@keyframes fadeIn-b-z4najtkjxy {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes popIn-b-z4najtkjxy {
+    0%   { transform: scale(0.75); opacity: 0; }
+    80%  { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); }
+}
